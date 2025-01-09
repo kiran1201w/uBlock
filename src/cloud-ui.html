@@ -1,23 +1,124 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="utf-8">
-<title></title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Toolbar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        #cloudToolbar {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        button {
+            background-color: #0078d4;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            margin: 5px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
+        }
+
+        button:hover:not(:disabled) {
+            background-color: #005fa3;
+        }
+
+        button:focus {
+            outline: 2px solid #ff8c00;
+        }
+
+        #cloudOptions {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        #cloudOptions input {
+            padding: 5px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+
+        #cloudError {
+            color: red;
+            margin-top: 10px;
+        }
+
+        #cloudCapacity {
+            margin-top: 10px;
+            width: 100%;
+        }
+
+        #cloudCapacity > div {
+            background-color: #e0e0e0;
+            width: 100%;
+            height: 20px;
+            border-radius: 5px;
+            position: relative;
+        }
+
+        #cloudCapacity > div > div {
+            background-color: #4caf50;
+            height: 100%;
+            width: 0%;
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        @media (max-width: 600px) {
+            #cloudToolbar {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
-<div id="cloudToolbar">
-    <div>
-        <button id="cloudPush" class="iconified notext" type="button" data-i18n-title="cloudPush"><span class="fa-icon">cloud-upload</span><span class="hover"></span></button>
-        <span id="cloudInfo" data-i18n="cloudNoData"></span>
-        <button id="cloudPull" class="iconified notext" type="button" data-i18n-title="cloudPull" disabled><span class="fa-icon">cloud-download</span><span class="hover"></span></button>
-        <button id="cloudPullAndMerge" class="iconified notext" type="button" data-i18n-title="cloudPullAndMerge" disabled><span class="fa-icon">cloud-download</span><span class="fa-icon">plus</span><span class="hover"></span></button>
+    <nav id="cloudToolbar" aria-label="Cloud Actions Toolbar">
+        <div>
+            <button id="cloudPush" class="iconified notext" type="button" aria-label="Push to Cloud" title="Push to Cloud">
+                <span class="fa-icon">cloud-upload</span>
+            </button>
+            <span id="cloudInfo" aria-live="polite" data-i18n="cloudNoData">No Data Available</span>
+            <button id="cloudPull" class="iconified notext" type="button" aria-label="Pull from Cloud" title="Pull from Cloud" disabled>
+                <span class="fa-icon">cloud-download</span>
+            </button>
+            <button id="cloudPullAndMerge" class="iconified notext" type="button" aria-label="Pull and Merge from Cloud" title="Pull and Merge from Cloud" disabled>
+                <span class="fa-icon">cloud-download</span>
+                <span class="fa-icon">plus</span>
+            </button>
+        </div>
+        <div id="cloudCog" class="fa-icon" aria-label="Settings" title="Settings">⚙️</div>
+        <div id="cloudOptions" role="region" aria-labelledby="cloudCog">
+            <label for="cloudDeviceName" data-i18n="cloudDeviceNamePrompt">Device Name:</label>
+            <input id="cloudDeviceName" type="text" placeholder="Enter device name">
+            <button id="cloudOptionsSubmit" type="button" aria-label="Submit Device Name" title="Submit Device Name">Submit</button>
+        </div>
+    </nav>
+    <div id="cloudError" role="alert" aria-live="assertive">No errors</div>
+    <div id="cloudCapacity" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+        <div>
+            <div style="width: 25%;" aria-label="Storage used: 25%"></div>
+        </div>
     </div>
-    <div id="cloudCog" class="fa-icon">cog</div>
-    <div id="cloudOptions">
-        <label data-i18n="cloudDeviceNamePrompt">_<input id="cloudDeviceName" type="text" value=""></label>&nbsp;<button id="cloudOptionsSubmit" type="button" data-i18n="genericSubmit">_<span class="hover"></span></button>
-    </div>
-</div>
-<div id="cloudError"></div>
-<div id="cloudCapacity"><div><div></div></div></div>
 </body>
 </html>
